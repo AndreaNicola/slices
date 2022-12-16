@@ -1,5 +1,7 @@
 package slices
 
+import "fmt"
+
 type Slice[T any] struct {
 	ts []T
 }
@@ -12,6 +14,10 @@ func New[T any](ts []T) *Slice[T] {
 	return &Slice[T]{
 		ts: myTs,
 	}
+}
+
+func (s Slice[T]) String() string {
+	return fmt.Sprint(s.ts)
 }
 
 func (s Slice[T]) Map(conv func(t T) interface{}) *Slice[interface{}] {
