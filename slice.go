@@ -1,6 +1,8 @@
 package slices
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Slice[T any] struct {
 	ts []T
@@ -16,6 +18,10 @@ func New[T any](ts []T) *Slice[T] {
 	}
 }
 
+func (s Slice[T]) Elements() []T {
+	return s.ts
+}
+
 func (s Slice[T]) String() string {
 	return fmt.Sprint(s.ts)
 }
@@ -29,5 +35,11 @@ func (s Slice[T]) Map(conv func(t T) interface{}) *Slice[interface{}] {
 func (s Slice[T]) Filter(filter func(t T) bool) *Slice[T] {
 	return &Slice[T]{
 		ts: inPlaceFilter(filter, s.ts),
+	}
+}
+
+func (s Slice[T]) Reverse() *Slice[T] {
+	return &Slice[T]{
+		ts: Reverse(s.ts),
 	}
 }
