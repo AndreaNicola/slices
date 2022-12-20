@@ -34,7 +34,7 @@ func (s Slice[T]) Map(conv func(t T) interface{}) *Slice[interface{}] {
 
 func (s Slice[T]) Filter(filter func(t T) bool) *Slice[T] {
 	return &Slice[T]{
-		ts: inPlaceFilter(filter, s.ts),
+		ts: Filter(filter, s.ts),
 	}
 }
 
@@ -53,5 +53,17 @@ func (s Slice[T]) Foldl(f func(t1 T, t2 interface{}) interface{}, acc interface{
 }
 
 func (s Slice[T]) Reduce(f func(t1 T, t2 interface{}) interface{}, acc interface{}) interface{} {
-	return foldl(f, acc, s.ts)
+	return foldr(f, acc, s.ts)
+}
+
+func (s Slice[T]) ForEach(f func(t T)) {
+	for i := 0; i < len(s.ts); i++ {
+		f(s.ts[i])
+	}
+}
+
+func (s Slice[T]) GoForEach(f func(t T)) {
+	for i := 0; i < len(s.ts); i++ {
+		go f(s.ts[i])
+	}
 }

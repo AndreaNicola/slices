@@ -44,31 +44,6 @@ func Filter[T any](filter func(t T) bool, ts []T) []T {
 
 }
 
-func inPlaceFilter[T any](filter func(t T) bool, ts []T) []T {
-
-	lastFilteredT := 0
-	r := len(ts)
-
-	for i := 0; i < r; i++ {
-
-		if filter(ts[i]) {
-			lastFilteredT++
-		} else {
-
-			ts[r-1], ts[i] = ts[i], ts[r-1]
-			r--
-			i--
-
-		}
-
-	}
-
-	filtered := make([]T, lastFilteredT)
-	copy(filtered, ts)
-	return filtered
-
-}
-
 func foldr[T1, T2 any](f func(t1 T1, t2 T2) T2, t T2, ts []T1) T2 {
 
 	if len(ts) == 0 {
