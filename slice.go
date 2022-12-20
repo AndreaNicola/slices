@@ -43,3 +43,15 @@ func (s Slice[T]) Reverse() *Slice[T] {
 		ts: Reverse(s.ts),
 	}
 }
+
+func (s Slice[T]) Foldr(f func(t1 T, t2 interface{}) interface{}, acc interface{}) interface{} {
+	return foldr(f, acc, s.ts)
+}
+
+func (s Slice[T]) Foldl(f func(t1 T, t2 interface{}) interface{}, acc interface{}) interface{} {
+	return foldl(f, acc, s.ts)
+}
+
+func (s Slice[T]) Reduce(f func(t1 T, t2 interface{}) interface{}, acc interface{}) interface{} {
+	return foldl(f, acc, s.ts)
+}

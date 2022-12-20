@@ -68,3 +68,23 @@ func inPlaceFilter[T any](filter func(t T) bool, ts []T) []T {
 	return filtered
 
 }
+
+func foldr[T1, T2 any](f func(t1 T1, t2 T2) T2, t T2, ts []T1) T2 {
+
+	if len(ts) == 0 {
+		return t
+	}
+
+	return f(ts[0], foldr(f, t, ts[1:]))
+
+}
+
+func foldl[T1, T2 any](f func(t1 T1, t2 T2) T2, t T2, ts []T1) T2 {
+
+	if len(ts) == 0 {
+		return t
+	}
+
+	return foldl(f, f(ts[0], t), ts[1:])
+
+}
