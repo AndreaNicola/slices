@@ -32,6 +32,12 @@ func (s Slice[T]) Map(conv func(t T) interface{}) *Slice[interface{}] {
 	}
 }
 
+func (s Slice[T]) GoMap(conv func(t T) interface{}) *Slice[interface{}] {
+	return &Slice[interface{}]{
+		ts: GoMap(conv, s.ts),
+	}
+}
+
 func (s Slice[T]) Filter(filter func(t T) bool) *Slice[T] {
 	return &Slice[T]{
 		ts: Filter(filter, s.ts),

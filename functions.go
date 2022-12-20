@@ -12,6 +12,20 @@ func Map[T1 any, T2 any](conversion func(t1 T1) T2, t1s []T1) []T2 {
 
 }
 
+func GoMap[T1 any, T2 any](conversion func(t1 T1) T2, t1s []T1) []T2 {
+
+	t1sCardinality := len(t1s)
+	t2s := make([]T2, t1sCardinality)
+	for i := 0; i < t1sCardinality; i++ {
+		go func(j int) {
+			t2s[j] = conversion(t1s[j])
+		}(i)
+	}
+
+	return t2s
+
+}
+
 func Reverse[T any](ts []T) []T {
 
 	rev := make([]T, len(ts))
